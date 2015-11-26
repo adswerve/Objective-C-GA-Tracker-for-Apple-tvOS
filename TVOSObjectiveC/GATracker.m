@@ -83,26 +83,40 @@
 }
 
 - (void)screenViewWithScreenName:(NSString *)screenName customParameters:(NSDictionary *)parameters {
-    NSMutableDictionary *screenParameters = @[@"cd", screenName];
-    if (screenParameters != nil) {
+    NSMutableDictionary *screenParameters = [[NSMutableDictionary alloc] initWithDictionary:@{@"cd": screenName}];
+    if (parameters != nil) {
         for (NSString *key in parameters) {
-            parameters valueForKeyPath:<#(nonnull NSString *)#>
+            [screenParameters setObject:[parameters valueForKey:key] forKey:key];
         }
     }
-    
+    [self sendWithType:@"screenview" andParams:screenParameters];
 }
-    func screenView(screenName: String, customParameters: Dictionary<String, String>?) {
-        /*
-         A screenview hit, use screenname
-         */
-        var params = ["cd" : screenName]
-        if (customParameters != nil) {
-            for (key, value) in customParameters! {
-                params.updateValue(value, forKey: key)
-            }
-        }
-        self.send("screenview", params: params)
+
+- (void)eventWithCategory:(NSString *)category action:(NSString *)action label:(NSString *)label customParameters:(NSDictionary *)parameters {
+    if (label == nil) {
+        label = @"";
     }
+    NSMutableDictionary *eventParameters = [[NSMutableDictionary alloc] initWithDictionary:@{@"ec": category, @"ea": action, @"el": label}];
+    if (parameters != nil) {
+        for (NSString *key in parameters) {
+            [eventParameters setObject:[parameters valueForKey:key] forKey:key];
+        }
+    }
+    [self sendWithType:@"event" andParams:eventParameters];
+}
+
+- (void)excpetionWithDescription:(NSString *)description isFatal:(BOOL)isFatal customParameters:(NSDictionary *)parameters {
+    NSString *fatal = @"0";
+    if (isFatal) {
+        fatal = @"1";
+    }
+    NSMutableDictionary *exceptionParameters = [[NSMutableDictionary alloc] initWithDictionary:@{@"exd": description, @"exf": fatal}];
+    if (parameters != nil) {
+        for (NSString *key in parameters) {
+            [exceptionParameters setObject:[parameters valueForKey:key] forKey:key];
+        }
+    }
+    [self sendWithType:@"exception" andParams:exceptionParameters];
 }
 
 

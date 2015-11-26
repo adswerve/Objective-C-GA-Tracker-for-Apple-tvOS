@@ -23,5 +23,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)eventTrigger:(id)sender {
+    
+}
+- (IBAction)exceptionTrigger:(id)sender {
+    
+}
 
 @end
