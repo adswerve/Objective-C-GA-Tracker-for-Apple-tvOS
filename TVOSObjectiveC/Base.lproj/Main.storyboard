@@ -25,11 +25,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4L-HD-MKI">
-                                <rect key="frame" x="836" y="603" width="249" height="86"/>
+                                <rect key="frame" x="815" y="603" width="290" height="86"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Exception"/>
+                                <state key="normal" title="Next Screen"/>
                                 <connections>
-                                    <action selector="exceptionTrigger:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="nfT-H2-sEa"/>
+                                    <action selector="nextScreenPressed:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="XJ6-wp-LBY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -41,9 +41,44 @@
                             <constraint firstItem="f4L-HD-MKI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="j1F-cc-iZS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="um5-xk-Ra8" kind="show" identifier="toSecondViewController" id="Rfl-TL-C0F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Second View Controller-->
+        <scene sceneID="Cxe-m0-fJW">
+            <objects>
+                <viewController id="um5-xk-Ra8" customClass="SecondViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="elP-Gi-12X"/>
+                        <viewControllerLayoutGuide type="bottom" id="RN4-AN-osb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hrM-jo-TDf">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fpg-4C-Qzz">
+                                <rect key="frame" x="800" y="497" width="321" height="86"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Fire Exception"/>
+                                <connections>
+                                    <action selector="fireException:" destination="um5-xk-Ra8" eventType="primaryActionTriggered" id="x8A-KF-xFP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Fpg-4C-Qzz" firstAttribute="centerX" secondItem="hrM-jo-TDf" secondAttribute="centerX" id="EWW-Bm-rus"/>
+                            <constraint firstItem="Fpg-4C-Qzz" firstAttribute="centerY" secondItem="hrM-jo-TDf" secondAttribute="centerY" id="yz0-Wz-WXW"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rqi-2R-vou" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2223" y="657"/>
         </scene>
     </scenes>
 </document>

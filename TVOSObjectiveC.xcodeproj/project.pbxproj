@@ -15,6 +15,7 @@
 		6363F1F61C0663FC00F6756D /* TVOSObjectiveCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6363F1F51C0663FC00F6756D /* TVOSObjectiveCTests.m */; };
 		6363F2011C0663FC00F6756D /* TVOSObjectiveCUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6363F2001C0663FC00F6756D /* TVOSObjectiveCUITests.m */; };
 		6363F2101C0664AC00F6756D /* GATracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6363F20F1C0664AC00F6756D /* GATracker.m */; };
+		6373079E1C45B5FC003BA25F /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6373079D1C45B5FC003BA25F /* SecondViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		6363F2021C0663FC00F6756D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6363F20E1C0664AC00F6756D /* GATracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GATracker.h; sourceTree = "<group>"; };
 		6363F20F1C0664AC00F6756D /* GATracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GATracker.m; sourceTree = "<group>"; };
+		6373079C1C45B5FC003BA25F /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		6373079D1C45B5FC003BA25F /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,8 @@
 				6363F1E21C0663FB00F6756D /* AppDelegate.m */,
 				6363F1E41C0663FB00F6756D /* ViewController.h */,
 				6363F1E51C0663FB00F6756D /* ViewController.m */,
+				6373079C1C45B5FC003BA25F /* SecondViewController.h */,
+				6373079D1C45B5FC003BA25F /* SecondViewController.m */,
 				6363F20E1C0664AC00F6756D /* GATracker.h */,
 				6363F20F1C0664AC00F6756D /* GATracker.m */,
 				6363F1E71C0663FB00F6756D /* Main.storyboard */,
@@ -271,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6373079E1C45B5FC003BA25F /* SecondViewController.m in Sources */,
 				6363F1E61C0663FB00F6756D /* ViewController.m in Sources */,
 				6363F1E31C0663FB00F6756D /* AppDelegate.m in Sources */,
 				6363F2101C0664AC00F6756D /* GATracker.m in Sources */,
@@ -492,6 +498,7 @@
 				6363F2071C0663FC00F6756D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6363F2081C0663FC00F6756D /* Build configuration list for PBXNativeTarget "TVOSObjectiveCTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +507,7 @@
 				6363F20A1C0663FC00F6756D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6363F20B1C0663FC00F6756D /* Build configuration list for PBXNativeTarget "TVOSObjectiveCUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +516,7 @@
 				6363F20D1C0663FC00F6756D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

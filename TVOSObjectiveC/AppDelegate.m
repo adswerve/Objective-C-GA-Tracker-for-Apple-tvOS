@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GATracker.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [GATracker setupWithTrackingID:@"UA-60094916-5"];
+    
     return YES;
 }
 

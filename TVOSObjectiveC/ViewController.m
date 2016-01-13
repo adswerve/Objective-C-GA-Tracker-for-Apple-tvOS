@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "GATracker.h"
 
 @interface ViewController ()
 
@@ -19,15 +20,20 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [GATracker screenView:@"FirstScreen" customParameters:nil];
 }
+
 - (IBAction)eventTrigger:(id)sender {
+    NSLog(@"Fire Event");
+    [GATracker event:@"a" action:@"b" label:nil customParameters:nil];
     
 }
-- (IBAction)exceptionTrigger:(id)sender {
-    
+
+- (IBAction)nextScreenPressed:(id)sender {
+    [self performSegueWithIdentifier:@"toSecondViewController" sender:self];
 }
+
 
 @end

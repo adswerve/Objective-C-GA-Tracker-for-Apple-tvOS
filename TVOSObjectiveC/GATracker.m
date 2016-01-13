@@ -20,12 +20,6 @@
  @ua = User Agent string
  */
 @property (strong, nonatomic) NSString *tid;
-@property (strong, nonatomic) NSString *cid;
-@property (strong, nonatomic) NSString *appName;
-@property (strong, nonatomic) NSString *appVersion;
-@property (strong, nonatomic) NSString *MPVersion;
-@property (strong, nonatomic) NSString *ua;
-
 
 @end
 
@@ -43,6 +37,7 @@
 }
 
 + (void)setupWithTrackingID:(NSString *)tid {
+    
     [GATracker sharedInstance].tid = tid;
     [GATracker sharedInstance].appName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
     [GATracker sharedInstance].appVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
@@ -55,68 +50,91 @@
     }
     else {
         [GATracker sharedInstance].cid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [[NSUserDefaults standardUserDefaults] setObject:[GATracker sharedInstance].cid forKey:@"cid"];
     }
 
 }
 
-- (void)sendWithType:(NSString *)type andParams:(NSDictionary *)params {
++ (void)send:(NSString *)type andParams:(NSDictionary *)params {
+    /*
+     Generic hit sender to Measurement Protocol
+     Consists out of hit type and a dictionary of other parameters
+     */
     NSString *endpoint = @"https://www.google-analytics.com/collect?";
-    NSString *parameters = [NSString stringWithFormat:@"v=%@&an=%@&tid=%@&av=%@&cid=%@&t=%@&ua=%@", self.MPVersion, self.appName, self.tid, self.appVersion, self.cid, type, self.ua];
+    NSMutableString *parameters = [NSMutableString stringWithFormat:@"v=%@&an=%@&tid=%@&av=%@&cid=%@&t=%@&ua=%@", [GATracker sharedInstance].MPVersion, [GATracker sharedInstance].appName, [GATracker sharedInstance].tid, [GATracker sharedInstance].appVersion, [GATracker sharedInstance].cid, type, [GATracker sharedInstance].ua];
     for (NSString *key in params) {
-        [parameters stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, [params objectForKey:key]]];
+        [parameters appendString:[NSString stringWithFormat:@"&%@=%@", key, [params valueForKey:key]]];
     }
     
     //Encoding
     NSString *encodedString = [parameters stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
-    NSLog(@"%@", encodedString);
     if (encodedString) {
         NSString *urlString = [NSString stringWithFormat:@"%@%@", endpoint, encodedString];
         NSURL *url = [[NSURL alloc] initWithString:urlString];
+#if DEBUG
+        NSLog(@"%@", urlString);
+#endif
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 if ([httpResponse isKindOfClass:[NSHTTPURLResponse class]]) {
                     NSLog(@"%ld", (long)[httpResponse statusCode]);
                 }
-        [task resume];
+                else {
+                    if (error) {
+#if DEBUG
+                        NSLog(@"%@", error.description);
+#endif
+                    }
+                }
         }];
+    [task resume];
     }
 }
 
-- (void)screenViewWithScreenName:(NSString *)screenName customParameters:(NSDictionary *)parameters {
-    NSMutableDictionary *screenParameters = [[NSMutableDictionary alloc] initWithDictionary:@{@"cd": screenName}];
++ (void)screenView:(NSString *)screenName customParameters:(NSDictionary *)parameters {
+    /*
+     A screenview hit, use screenname
+     */
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:@{@"cd": screenName}];
     if (parameters != nil) {
         for (NSString *key in parameters) {
-            [screenParameters setObject:[parameters valueForKey:key] forKey:key];
+            [params setObject:[parameters valueForKey:key] forKey:key];
         }
     }
-    [self sendWithType:@"screenview" andParams:screenParameters];
+    [GATracker send:@"screenview" andParams:params];
 }
 
-- (void)eventWithCategory:(NSString *)category action:(NSString *)action label:(NSString *)label customParameters:(NSDictionary *)parameters {
++ (void)event:(NSString *)category action:(NSString *)action label:(NSString *)label customParameters:(NSDictionary *)parameters {
+    /*
+     An event hit with category, action, label
+     */
     if (label == nil) {
         label = @"";
     }
-    NSMutableDictionary *eventParameters = [[NSMutableDictionary alloc] initWithDictionary:@{@"ec": category, @"ea": action, @"el": label}];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:@{@"ec": category, @"ea": action, @"el": label}];
     if (parameters != nil) {
         for (NSString *key in parameters) {
-            [eventParameters setObject:[parameters valueForKey:key] forKey:key];
+            [params setObject:[parameters valueForKey:key] forKey:key];
         }
     }
-    [self sendWithType:@"event" andParams:eventParameters];
+    [self send:@"event" andParams:params];
 }
 
-- (void)excpetionWithDescription:(NSString *)description isFatal:(BOOL)isFatal customParameters:(NSDictionary *)parameters {
++ (void)excpetionWithDescription:(NSString *)description isFatal:(BOOL)isFatal customParameters:(NSDictionary *)parameters {
+    /*
+     An exception hit with exception description (exd) and "fatality"  (Crashed or not) (exf)
+     */
     NSString *fatal = @"0";
     if (isFatal) {
         fatal = @"1";
     }
-    NSMutableDictionary *exceptionParameters = [[NSMutableDictionary alloc] initWithDictionary:@{@"exd": description, @"exf": fatal}];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:@{@"exd": description, @"exf": fatal}];
     if (parameters != nil) {
         for (NSString *key in parameters) {
-            [exceptionParameters setObject:[parameters valueForKey:key] forKey:key];
+            [params setObject:[parameters valueForKey:key] forKey:key];
         }
     }
-    [self sendWithType:@"exception" andParams:exceptionParameters];
+    [self send:@"exception" andParams:params];
 }
 
 
