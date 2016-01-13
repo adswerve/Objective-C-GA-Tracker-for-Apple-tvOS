@@ -17,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [GATracker setupWithTrackingID:@"UA-60094916-5"];
+    [GATracker setupWithTrackingID:@"UA-1234567-89"];
     
     return YES;
 }
